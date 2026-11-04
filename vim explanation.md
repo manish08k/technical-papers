@@ -1,5 +1,4 @@
-# Vim & Neovim — Complete Learning, Explanation & Interview Revision Guide (2026)
-
+# Vim & Neovim 
 > A beginner-to-advanced guide to understanding Vim, explaining how it works, using it efficiently, reviewing its commands, and practising real editing workflows.
 >
 > This guide complements the **Vim & Neovim Command Cheat Sheet**. The cheat sheet is a command reference; this document explains the concepts behind those commands.
