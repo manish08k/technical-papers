@@ -1,37 +1,111 @@
+from pathlib import Path
 
-## Slide 1 — What is Vim?
+content = r"""# Vim — Complete Explanation and Command Reference
 
-**Vim** stands for **Vi Improved**. It is a terminal-based, keyboard-driven text editor used to create and edit files.
+This document explains Vim in simple language. It covers what Vim is, why it is useful, how its modes work, and how to use its important commands with examples.
 
-Developers and system administrators use Vim to:
-- Edit source code and scripts.
-- Modify Linux configuration files.
-- Work on remote servers through SSH.
-- Search and replace text efficiently.
+## 1. What is Vim?
 
-**Presenter explanation:**  
-“Vim is a text editor that lets us work mainly with the keyboard. It is especially useful when we are working in a terminal or connected to a remote Linux server.”
+**Vim** stands for **Vi Improved**. It is a text editor that runs in the terminal. We can use it to create, read, and edit text files and source code.
 
-## Slide 2 — Why is Vim different?
+Vim is commonly used by:
+- Developers to edit source code and scripts.
+- Linux administrators to edit configuration files.
+- People working on remote servers through SSH.
+- Anyone who wants to edit files quickly using the keyboard.
 
-Vim is a **modal editor**. This means the keyboard has different functions depending on the mode.
+**Simple explanation:** Vim is a keyboard-based text editor that is especially useful when working in a terminal.
+
+**Example:**
+
+```bash
+vim demo.txt
+```
+
+This opens `demo.txt` in Vim. If the file does not exist, Vim can create it when we save.
+
+## 2. Why is Vim useful?
+
+- It works directly in the terminal; a graphical desktop is not required.
+- It is useful when connecting to remote Linux machines using SSH.
+- Keyboard commands make many editing tasks quick.
+- It provides powerful search and replace.
+- It supports macros, which can repeat editing steps.
+- It is available on many Unix-like systems.
+
+**Simple explanation:** Vim is useful because we can edit files directly from the terminal, even on a remote server where a graphical editor may not be available.
+
+## 3. Understanding Vim modes
+
+Vim is called a **modal editor**. This means the keyboard performs different actions depending on the current mode.
 
 | Mode | Purpose |
 |---|---|
-| Normal mode | Navigate and perform editing operations |
+| Normal mode | Navigate through text and perform editing commands |
 | Insert mode | Type and insert text |
 | Visual mode | Select text |
-| Command-line mode | Run commands such as save, quit and search-and-replace |
-| Replace mode | Overwrite existing characters |
+| Command-line mode | Run commands such as save, quit, and replace |
+| Replace mode | Overwrite existing characters while typing |
 
-**Presenter explanation:**  
-“In a regular text editor, we usually type directly into the document. In Vim, we first choose what we want to do. For example, we use Insert mode to type and Normal mode to navigate or edit.”
+### Normal mode
 
-**Demonstration:** Open a file with `vim demo.txt`, press `i` to type, press `Esc` to return to Normal mode, then enter `:wq` to save and quit.
+Normal mode is the mode Vim starts in. We use it to move around and run commands.
 
-## Slide 3 — Basic navigation
+Press `Esc` to return to Normal mode from another mode.
 
-Vim uses keyboard keys to move around the file.
+### Insert mode
+
+Insert mode is used to type text.
+
+- `i` — start typing before the cursor.
+- `a` — start typing after the cursor.
+- `o` — create a new line below and start typing.
+- `O` — create a new line above and start typing.
+
+Press `Esc` to leave Insert mode.
+
+### Visual mode
+
+Visual mode is used to select text.
+
+- `v` — select characters.
+- `V` — select complete lines.
+- `Ctrl-v` — select a rectangular block of text.
+
+### Command-line mode
+
+Press `:` in Normal mode to enter a command. For example:
+
+- `:w` — save.
+- `:q` — quit.
+- `:wq` — save and quit.
+
+### Replace mode
+
+Press `R` in Normal mode to overwrite existing text as you type. Press `Esc` to return to Normal mode.
+
+**Simple explanation:** We use Insert mode to type, Normal mode to move and edit, Visual mode to select, and Command-line mode to run editor commands.
+
+## 4. Opening and creating files
+
+| Command | Purpose |
+|---|---|
+| `vim file.txt` | Open a file or create it when saved |
+| `vim file1.txt file2.txt` | Open multiple files |
+| `vim +10 file.txt` | Open a file at line 10 |
+| `vim +/error file.txt` | Open a file at the first match for `error` |
+
+**Example:**
+
+```bash
+vim notes.txt
+```
+
+This opens `notes.txt` in Vim.
+
+## 5. Moving around in a file
+
+These navigation keys are used in Normal mode.
 
 | Key | Action |
 |---|---|
@@ -39,152 +113,272 @@ Vim uses keyboard keys to move around the file.
 | `j` | Move down |
 | `k` | Move up |
 | `l` | Move right |
-| `w` | Move to the next word |
-| `b` | Move to the previous word |
-| `0` | Move to the beginning of the line |
+| `w` | Move to the beginning of the next word |
+| `b` | Move to the beginning of the previous word |
+| `e` | Move to the end of the current or next word |
+| `0` | Move to the first character position of the line |
+| `^` | Move to the first non-blank character of the line |
 | `$` | Move to the end of the line |
 | `gg` | Go to the first line |
 | `G` | Go to the last line |
+| `10G` | Go to line 10 |
+| `Ctrl-f` | Move one screen forward |
+| `Ctrl-b` | Move one screen backward |
 
-**Presenter explanation:**  
-“These keys let us move through a file without using the mouse. For example, `gg` takes us to the top of the file and `G` takes us to the bottom.”
+**Example:** Press `gg` to go to the beginning of the file and `G` to go to the end.
 
-## Slide 4 — Common editing commands
+## 6. Inserting and editing text
 
 | Command | Action |
 |---|---|
-| `i` | Insert text before the cursor |
-| `a` | Insert text after the cursor |
-| `o` | Create a new line below |
-| `O` | Create a new line above |
-| `x` | Delete a character |
+| `i` | Insert before the cursor |
+| `I` | Insert at the beginning of the line's text |
+| `a` | Append after the cursor |
+| `A` | Append at the end of the line |
+| `o` | Open a new line below |
+| `O` | Open a new line above |
+| `r` | Replace one character |
+| `R` | Enter Replace mode |
+| `J` | Join the current line with the next line |
+
+**Example:** Move the cursor to a line and press `A` to add text at the end of that line.
+
+## 7. Deleting, copying and pasting
+
+| Command | Action |
+|---|---|
+| `x` | Delete the character under the cursor |
+| `X` | Delete the character before the cursor |
 | `dd` | Delete the current line |
-| `yy` | Copy the current line |
-| `p` | Paste after or below |
-| `u` | Undo |
-| `Ctrl-r` | Redo |
-| `.` | Repeat the last change |
+| `3dd` | Delete three lines |
+| `dw` | Delete from the cursor to the next word boundary |
+| `D` | Delete from the cursor to the end of the line |
+| `yy` | Copy (yank) the current line |
+| `3yy` | Copy three lines |
+| `yw` | Copy a word movement from the cursor |
+| `p` | Paste after the cursor, or below for line-wise text |
+| `P` | Paste before the cursor, or above for line-wise text |
 
-**Presenter explanation:**  
-“Vim commands are short. `dd` deletes a line, `yy` copies a line, and `p` pastes it. If we make a mistake, `u` undoes the change.”
+**Simple explanation:** In Vim, `d` is used to delete, `y` is used to copy, and `p` is used to paste.
 
-## Slide 5 — A useful Vim command pattern
-
-Many Vim commands combine an **operator** with a **motion** or **text object**.
+**Example:**
 
 ```text
-[count] + [operator] + [motion or text object]
+dd  → delete the current line
+yy  → copy the current line
+p   → paste the copied line
 ```
 
-| Part | Meaning | Examples |
-|---|---|---|
-| Count | How many times | `3` |
-| Operator | What action to perform | `d` delete, `c` change, `y` copy |
-| Motion | Where the action applies | `w`, `$`, `}` |
-| Text object | A structured text region | `iw`, `i"`, `i(` |
-
-Examples:
-- `dw` — delete from the cursor to the next word boundary.
-- `3dd` — delete three lines.
-- `ciw` — change the word under the cursor.
-- `yy` — copy the current line.
-
-**Presenter explanation:**  
-“Instead of memorizing a separate command for every task, we can combine an action with a movement. This is one of the ideas that makes Vim powerful.”
-
-## Slide 6 — Search and replace
-
-Vim can search for text and replace it.
+## 8. Changing text, undo and redo
 
 | Command | Action |
 |---|---|
-| `/error` | Search forward for `error` |
-| `n` | Go to the next match |
-| `N` | Go to the previous match |
-| `:%s/old/new/g` | Replace all matches in the file |
-| `:%s/old/new/gc` | Ask before each replacement |
+| `cw` | Change text from the cursor through the end of the word |
+| `ciw` | Change the word under the cursor |
+| `cc` | Change the entire line |
+| `C` | Change from the cursor to the end of the line |
+| `u` | Undo the last change |
+| `Ctrl-r` | Redo an undone change |
+| `.` | Repeat the last change |
 
-**Presenter explanation:**  
-“Suppose a variable name appears many times in a file. We can use search-and-replace to update it instead of changing each occurrence manually.”
+**What does `ciw` mean?**
 
-Example:
+- `c` means change.
+- `i` means inside.
+- `w` means word.
+
+So, `ciw` deletes the word under the cursor and enters Insert mode so we can type a replacement.
+
+## 9. Selecting text with Visual mode
+
+| Command | Action |
+|---|---|
+| `v` | Start character-wise selection |
+| `V` | Start line-wise selection |
+| `Ctrl-v` | Start block-wise selection |
+| `y` | Copy the selected text |
+| `d` | Delete the selected text |
+| `>` | Indent the selected text |
+| `<` | Remove one level of indentation |
+
+**Example:** Press `V`, move up or down to select lines, and press `>` to indent them.
+
+## 10. Searching for text
+
+| Command | Action |
+|---|---|
+| `/word` | Search forward for `word` |
+| `?word` | Search backward for `word` |
+| `n` | Move to the next search match |
+| `N` | Move to the previous search match |
+| `*` | Search forward for the word under the cursor |
+| `#` | Search backward for the word under the cursor |
+
+**Example:**
 
 ```vim
-:%s/old_name/new_name/gc
+/error
 ```
 
-The `g` flag replaces every match on each line, and `c` asks for confirmation.
+Press Enter to search for `error`. Use `n` to move to the next match and `N` to move to the previous match.
 
-## Slide 7 — Saving and exiting
+## 11. Replacing text
+
+Vim uses the substitute command to replace text.
+
+| Command | Action |
+|---|---|
+| `:s/old/new/` | Replace the first match on the current line |
+| `:s/old/new/g` | Replace all matches on the current line |
+| `:%s/old/new/g` | Replace all matches in the file |
+| `:%s/old/new/gc` | Ask for confirmation before each replacement |
+| `:10,20s/old/new/g` | Replace matches between lines 10 and 20 |
+
+**Example:**
+
+```vim
+:%s/apple/orange/gc
+```
+
+This searches the whole file, replaces `apple` with `orange`, and asks before each replacement.
+
+**What do the symbols mean?**
+- `%` means the whole file.
+- `s` means substitute.
+- `g` means all matches on each line.
+- `c` means ask for confirmation.
+
+## 12. Saving and quitting
 
 | Command | Action |
 |---|---|
 | `:w` | Save the file |
+| `:w filename` | Save using another filename |
 | `:q` | Quit if there are no unsaved changes |
 | `:wq` | Save and quit |
-| `:q!` | Quit without saving changes |
 | `:x` | Save if changed and quit |
+| `:q!` | Quit without saving changes |
+| `:wqa` | Save all open files and quit all windows |
 
-**Presenter explanation:**  
-“After editing, we need to save our changes. `:w` saves, `:q` exits, and `:wq` does both. `:q!` exits without saving, so use it only when we intentionally want to discard changes.”
+**Simple explanation:** Use `:w` to save, `:q` to quit, and `:wq` to save and quit. Be careful with `:q!` because it discards unsaved changes.
 
-## Slide 8 — Buffers, windows and tabs
+## 13. Buffers, windows and tabs
 
-These three terms describe how Vim organizes files and views.
+Vim uses three concepts to organize editing.
 
-| Term | Meaning |
-|---|---|
-| Buffer | The text loaded in memory |
-| Window | A view displaying a buffer |
-| Tab page | A collection of windows |
+- **Buffer:** The text loaded into memory for a file.
+- **Window:** A view that displays a buffer.
+- **Tab page:** A collection of windows.
 
-Useful commands:
+A buffer can exist without being visible. A window displays a buffer, and more than one window can display the same buffer.
+
+### Buffer commands
 
 | Command | Action |
 |---|---|
 | `:ls` | List open buffers |
-| `:bn` | Move to the next buffer |
-| `:bp` | Move to the previous buffer |
+| `:e file.txt` | Open a file in the current window |
+| `:bn` | Go to the next buffer |
+| `:bp` | Go to the previous buffer |
+| `:bd` | Delete the current buffer from the buffer list |
+
+### Window commands
+
+| Command | Action |
+|---|---|
 | `:split` | Create a horizontal split |
 | `:vsplit` | Create a vertical split |
-| `Ctrl-w w` | Move between windows |
-| `:tabnew` | Create a new tab page |
-| `gt` | Move to the next tab page |
+| `Ctrl-w w` | Switch to another window |
+| `Ctrl-w h` | Move to the window on the left |
+| `Ctrl-w j` | Move to the window below |
+| `Ctrl-w k` | Move to the window above |
+| `Ctrl-w l` | Move to the window on the right |
+| `:close` | Close the current window |
 
-**Presenter explanation:**  
-“A buffer is the content being edited. A window is where we see that content. A tab page can contain multiple windows. This is slightly different from the file-tab system used by many graphical editors.”
+### Tab commands
 
-## Slide 9 — Useful diagnostic commands
+| Command | Action |
+|---|---|
+| `:tabnew` | Open a new tab page |
+| `:tabnext` or `gt` | Move to the next tab page |
+| `:tabprevious` or `gT` | Move to the previous tab page |
+| `:tabclose` | Close the current tab page |
 
-These commands help us inspect Vim's state and configuration.
+**Simple explanation:** A buffer is the file content, a window is the view of that content, and a tab page can contain multiple windows.
 
-| Command | What it shows | When it is useful |
+## 14. Registers and macros
+
+### Registers
+
+A register is a place where Vim stores text that we copy or delete. We can use registers to paste stored text later.
+
+| Command | Action |
+|---|---|
+| `:reg` | Display register contents |
+| `"ayy` | Copy the current line into register `a` |
+| `"ap` | Paste the contents of register `a` |
+| `"+y` | Copy selected text to the system clipboard, if clipboard support is available |
+| `"+p` | Paste from the system clipboard, if clipboard support is available |
+
+### Macros
+
+A macro records a sequence of keystrokes so that we can repeat the same editing task.
+
+| Command | Action |
+|---|---|
+| `qa` | Start recording into register `a` |
+| `q` | Stop recording |
+| `@a` | Run the macro stored in register `a` |
+| `@@` | Run the last executed macro again |
+| `10@a` | Run register `a`'s macro ten times |
+
+**Simple explanation:** Registers store text. Macros store editing actions. Both help us avoid repeating work manually.
+
+## 15. Indentation and formatting
+
+| Command | Action |
+|---|---|
+| `>>` | Indent the current line |
+| `<<` | Remove one level of indentation |
+| `==` | Automatically indent the current line |
+| `gg=G` | Re-indent the entire file |
+| `:set number` | Show line numbers |
+| `:set nonumber` | Hide line numbers |
+
+**Example:** Use `gg=G` to ask Vim to re-indent the entire file according to its indentation settings and file type.
+
+## 16. Useful information and diagnostic commands
+
+These commands help us inspect Vim and understand how a file is being handled.
+
+| Command | What it shows | Why it is useful |
 |---|---|---|
-| `:messages` | Recent messages from Vim | Check warnings, errors or command output |
-| `:scriptnames` | Scripts and configuration files loaded in the current session | Investigate which configuration or plugin scripts were loaded |
-| `:version` | Vim version, build information and supported features | Check the installed version and whether features such as clipboard support are available |
-| `:set fileformat?` | Current file line-ending format | Check whether a file uses Unix or DOS/Windows line endings |
-| `:set fileencoding?` | File's character encoding | Check how text is encoded when reading or writing the file |
+| `:messages` | Recent Vim messages | Check warnings, errors and command output |
+| `:scriptnames` | Scripts loaded in the current session | Check which configuration and plugin scripts were loaded |
+| `:version` | Version, build details and supported features | Check the installed Vim version and available features |
+| `:set fileformat?` | Current line-ending format | Check whether the file uses Unix or DOS/Windows line endings |
+| `:set fileencoding?` | Current file character encoding | Check whether the file uses an encoding such as UTF-8 |
+| `:set number?` | Whether line numbers are enabled | Check the current line-number setting |
+| `:set paste?` | Whether paste mode is enabled | Check the current paste setting |
+| `:pwd` | Vim's current working directory | See which directory Vim is using |
+| `:echo $MYVIMRC` | Path stored in the `MYVIMRC` environment variable | Help locate the Vim configuration file when set |
 
-**Presenter explanation:**  
-“These are inspection commands. They do not normally edit our text. They help us understand the editor's configuration and the format of the file.”
+**Important difference:**
+- `fileformat` is about line endings, such as `unix` (LF) or `dos` (CRLF).
+- `fileencoding` is about how characters are encoded, such as UTF-8.
 
-### Explain the two file-format commands
+These are two different file properties.
 
-- `fileformat` refers to line endings. Common values are `unix` (LF) and `dos` (CRLF).
-- `fileencoding` refers to the character encoding used for the file, such as UTF-8.
+## 17. Vim configuration
 
-**Important distinction:** Line-ending format and character encoding are different things.
+Vim settings can be saved in a configuration file so they are applied whenever Vim starts.
 
-## Slide 10 — Configuration
+Common configuration files:
+- Vim: `~/.vimrc`
+- Neovim with Lua: `~/.config/nvim/init.lua`
+- Neovim with Vimscript: `~/.config/nvim/init.vim`
 
-Vim can be customized using a configuration file.
-
-- Vim configuration: `~/.vimrc`
-- Neovim Lua configuration: `~/.config/nvim/init.lua`
-- Neovim Vimscript configuration: `~/.config/nvim/init.vim`
-
-Example Vim settings:
+Example Vim configuration:
 
 ```vim
 set number
@@ -197,82 +391,129 @@ set smartcase
 syntax on
 ```
 
-**Presenter explanation:**  
-“These settings customize the editor. For example, `number` displays line numbers, `tabstop=4` sets the displayed tab width, and `expandtab` inserts spaces instead of tab characters.”
+What these settings do:
 
-## Slide 11 — Vim and Neovim
+| Setting | Purpose |
+|---|---|
+| `number` | Show line numbers |
+| `relativenumber` | Show relative line numbers |
+| `tabstop=4` | Display a tab using a width of four spaces |
+| `shiftwidth=4` | Use four spaces for indentation operations |
+| `expandtab` | Insert spaces instead of tab characters |
+| `ignorecase` | Ignore case in searches |
+| `smartcase` | Make searches case-sensitive when uppercase letters are used |
+| `syntax on` | Enable syntax highlighting where supported |
 
-**Neovim** is a modern, community-driven fork of Vim. It keeps the modal editing approach and many familiar Vim commands, while offering modern extensibility and Lua-based configuration.
+## 18. What is Neovim?
+
+**Neovim** is a modern, community-driven fork of Vim. It keeps the familiar modal editing approach and many Vim commands, while providing modern APIs and extensibility. It also supports Lua for configuration.
 
 | Vim | Neovim |
 |---|---|
-| Traditional Vim editor | Modern Vim fork |
-| Commonly configured with Vimscript | Supports Vimscript and Lua |
-| Widely available on Unix-like systems | Focuses on modern APIs and extensibility |
-| Shares the modal editing model | Shares the modal editing model |
+| Original improved version of Vi | Community-driven fork of Vim |
+| Commonly configured using `~/.vimrc` | Commonly configured using `init.lua` |
+| Uses Vimscript for configuration and scripting | Supports Lua as well as Vimscript |
+| Widely available on Unix-like systems | Focuses on modern extensibility and APIs |
 
-**Presenter explanation:**  
-“If we learn the main Vim concepts, much of that knowledge also applies to Neovim. Neovim is an alternative for people who want a more modern configuration and extension environment.”
+**Simple explanation:** Neovim is a modern alternative to Vim. If we understand Vim's modes and commands, much of that knowledge also works in Neovim.
 
-## Slide 12 — Where Vim is useful
+## 19. Vim and Linux: practical uses
 
-Common real-world situations:
-- Editing a configuration file on a Linux machine.
-- Updating a script on a remote server through SSH.
-- Quickly changing text in source code.
-- Searching logs or configuration files.
-- Making repeated edits using macros and commands.
+Vim is useful in everyday Linux work.
 
-**Presenter explanation:**  
-“One major advantage is that Vim works inside a terminal. When we connect to a remote server, we can edit files without needing a graphical desktop.”
-
-## Slide 13 — Limitations and good practices
-
-**Limitations**
-- Modal editing takes time to learn.
-- Some advanced features require configuration or plugins.
-- Clipboard support depends on the installed build and environment.
-- It may not provide every feature of a fully configured graphical IDE by default.
-
-**Good practices**
-- Press `Esc` to return to Normal mode when unsure.
-- Save important changes regularly with `:w`.
-- Use `:help command` to read Vim's built-in documentation.
-- Be careful with `:q!`, because it discards unsaved changes.
-- Do not delete a swap file until you have checked whether another editing session or recoverable work exists.
-
-## Slide 14 — Short live demonstration
-
-Use this sequence to demonstrate the basic workflow:
+**Edit a configuration file:**
 
 ```bash
-vim demo.txt
+vim ~/.bashrc
 ```
 
-Inside Vim:
+**Edit a system configuration file:**
 
-1. Press `i` and type a few lines.
-2. Press `Esc` to return to Normal mode.
-3. Use `j` and `k` to move.
-4. Use `yy` to copy a line.
-5. Use `p` to paste it.
-6. Use `dd` to delete a line.
-7. Use `u` to undo.
-8. Type `/word` to search for a word.
-9. Type `:wq` to save and quit.
+```bash
+sudo vim /etc/hosts
+```
 
-## Slide 15 — Conclusion
+Administrative access may be required to edit system files. Only save changes when you understand their effect.
 
-**Key points to remember:**
+**Open a log file:**
 
-- Vim is a keyboard-driven, modal text editor.
-- Normal mode is for navigation and commands; Insert mode is for typing.
-- Operators combine with motions and text objects to perform edits.
-- Vim supports search, replacement, registers, macros, buffers and split windows.
-- Diagnostic commands help inspect the editor and file settings.
-- Neovim builds on Vim's editing model with modern extensibility.
+```bash
+vim /var/log/syslog
+```
 
-**Closing explanation:**  
-“Vim may feel different at first because it uses modes and commands. Once we understand the modes and a few basic command patterns, we can edit files efficiently from the terminal.”
+The log file may require permissions, and the path can differ between Linux distributions.
+
+**Simple explanation:** Vim lets us edit configuration files, scripts and logs directly from the terminal. This is especially useful when working on a Linux server over SSH.
+
+## 20. Vim help and troubleshooting
+
+| Command | Action |
+|---|---|
+| `:help` | Open Vim's built-in help |
+| `:help :w` | Read help for the save command |
+| `:help motion` | Read help about motions |
+| `:messages` | Review recent messages |
+| `:checkhealth` | Run health checks in supported Neovim versions |
+
+If Vim seems stuck in a mode, press `Esc` to return to Normal mode. If a command is unfamiliar, use `:help` followed by the command or topic.
+
+**Swap-file warning:** Vim may create a swap file while editing. If a warning appears, check whether the same file is open in another Vim session and whether unsaved work can be recovered. Do not delete the swap file without checking.
+
+## 21. Vim vs a regular text editor
+
+| Vim | Typical graphical text editor |
+|---|---|
+| Primarily keyboard-driven | Often uses both keyboard and mouse |
+| Uses different modes | Usually has one main editing mode |
+| Works directly in a terminal | Usually runs in a graphical interface |
+| Powerful command combinations | Often relies on menus, shortcuts and toolbar actions |
+| Very useful over SSH | May require a graphical environment or remote desktop |
+
+Neither approach is best for every situation. The right editor depends on the task and the user's preference.
+
+## 22. Quick command reference
+
+| Goal | Command |
+|---|---|
+| Open a file | `vim file.txt` |
+| Enter Insert mode | `i` |
+| Return to Normal mode | `Esc` |
+| Save | `:w` |
+| Quit | `:q` |
+| Save and quit | `:wq` |
+| Quit without saving | `:q!` |
+| Move left/down/up/right | `h`, `j`, `k`, `l` |
+| Next word | `w` |
+| Previous word | `b` |
+| Beginning of line | `0` |
+| End of line | `$` |
+| First line | `gg` |
+| Last line | `G` |
+| Delete line | `dd` |
+| Copy line | `yy` |
+| Paste | `p` |
+| Undo | `u` |
+| Redo | `Ctrl-r` |
+| Search forward | `/word` |
+| Next search match | `n` |
+| Select characters | `v` |
+| Select lines | `V` |
+| Change inner word | `ciw` |
+| Replace throughout file | `:%s/old/new/g` |
+| Show line numbers | `:set number` |
+| Open help | `:help` |
+
+## 23. Final explanation
+
+Vim is a terminal-based text editor built around modes and keyboard commands. Normal mode is used to navigate and edit, Insert mode is used to type, Visual mode is used to select text, and Command-line mode is used to run editor commands.
+
+Its main strengths are efficient keyboard editing, powerful search and replacement, and the ability to work directly in a terminal. Once we understand the modes and basic command patterns, Vim becomes easier to use for editing code, scripts and Linux configuration files.
 
 ---
+
+**When explaining Vim to someone:** First explain what Vim is, then demonstrate its modes, show a few navigation and editing commands, and finish with saving and quitting. Use the examples in this document directly in a terminal.
+"""
+
+path = Path("/mnt/data/vim_explanation.md")
+path.write_text(content, encoding="utf-8")
+print(f"Created {path.name} ({len(content.splitlines())} lines)")
