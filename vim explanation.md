@@ -503,17 +503,3 @@ Neither approach is best for every situation. The right editor depends on the ta
 | Show line numbers | `:set number` |
 | Open help | `:help` |
 
-## 23. Final explanation
-
-Vim is a terminal-based text editor built around modes and keyboard commands. Normal mode is used to navigate and edit, Insert mode is used to type, Visual mode is used to select text, and Command-line mode is used to run editor commands.
-
-Its main strengths are efficient keyboard editing, powerful search and replacement, and the ability to work directly in a terminal. Once we understand the modes and basic command patterns, Vim becomes easier to use for editing code, scripts and Linux configuration files.
-
----
-
-**When explaining Vim to someone:** First explain what Vim is, then demonstrate its modes, show a few navigation and editing commands, and finish with saving and quitting. Use the examples in this document directly in a terminal.
-"""
-
-path = Path("/mnt/data/vim_explanation.md")
-path.write_text(content, encoding="utf-8")
-print(f"Created {path.name} ({len(content.splitlines())} lines)")
