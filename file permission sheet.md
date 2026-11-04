@@ -1,6 +1,6 @@
 import pypandoc
 
-content = r"""# Linux File & Directory Permissions — Complete Command Cheat Sheet (2026)
+
 
 > Covers viewing permissions, hidden files, permission symbols, `chmod`, `chown`, `chgrp`, special bits, `umask`, ACLs, permission checks, and practical examples.
 >
