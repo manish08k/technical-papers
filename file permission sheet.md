@@ -4,7 +4,7 @@ import pypandoc
 
 > Covers viewing permissions, hidden files, permission symbols, `chmod`, `chown`, `chgrp`, special bits, `umask`, ACLs, permission checks, and practical examples.
 >
-> **Platform note:** Most basic commands work on Linux and macOS. Some options shown (such as GNU `stat -c`, `namei`, `getfacl`, and `setfacl`) are Linux-specific or may need separate installation on macOS.
+
 
 ## 1. View permissions and ownership
 
