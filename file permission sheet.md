@@ -1,9 +1,4 @@
-import pypandoc
 
-
-
-> Covers viewing permissions, hidden files, permission symbols, `chmod`, `chown`, `chgrp`, special bits, `umask`, ACLs, permission checks, and practical examples.
->
 
 
 ## 1. View permissions and ownership
