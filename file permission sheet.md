@@ -373,17 +373,3 @@ id
 groups
 sudo -l
 ```
-
-## 16. Linux vs macOS notes
-
-- Basic `ls`, `chmod`, `chown`, `chgrp`, `umask`, `stat` and shell permission tests are available on macOS.
-- `stat -c` is GNU/Linux syntax. macOS `stat` uses different options, for example `stat -f "%Sp %Lp %Su %Sg %N" file`.
-- `namei`, `getfacl` and `setfacl` are not standard macOS commands.
-- macOS supports ACLs, but its ACL commands and syntax differ from Linux.
-- For Linux-specific practice, use an Ubuntu VM or Linux machine.
-
-"""
-
-output_path = "/mnt/data/Linux_File_and_Directory_Permissions_Cheat_Sheet.md"
-pypandoc.convert_text(content, "md", format="md", outputfile=output_path, extra_args=["--standalone"])
-print(f"Created: {output_path}")
