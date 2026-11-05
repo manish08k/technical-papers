@@ -1,6 +1,3 @@
-
-
-
 ## 1. View permissions and ownership
 
 | Command | Purpose |
@@ -321,50 +318,61 @@ umask
 
 **Caution:** Do not blindly use `chmod -R 777`. It makes files and directories broadly writable and executable. Also, the separate `find` commands above are a general example; some projects need executable files, private files or special directory permissions preserved.
 
-# 15. Create / delete groups
-sudo dseditgroup -o create dev            # macOS
-sudo dseditgroup -o delete dev
-sudo groupadd dev                         # Linux
-sudo groupdel dev
+## 15. Create and manage users and groups
 
-# 16. Create / delete users
-sudo sysadminctl -addUser john -fullName "John" -password -   # macOS
-sudo sysadminctl -deleteUser john
-sudo useradd -m -s /bin/bash john         # Linux
-sudo passwd john
-sudo userdel -r john
+### macOS
 
-# 17. Add / remove user in group
-sudo dseditgroup -o edit -a john -t user dev   # macOS add
-sudo dseditgroup -o edit -d john -t user dev   # macOS remove
-sudo usermod -aG dev john                      # Linux add
-sudo gpasswd -d john dev                       # Linux remove
+| Command | Purpose |
+|---|---|
+| `sudo dseditgroup -o create dev` | Create group `dev` |
+| `sudo dseditgroup -o delete dev` | Delete group |
+| `sudo dseditgroup -o edit -a manish -t user dev` | Add user to group |
+| `sudo dseditgroup -o edit -d manish -t user dev` | Remove user from group |
+| `sudo sysadminctl -addUser john -fullName "John" -password -` | Create user (prompts for password) |
+| `sudo sysadminctl -deleteUser john` | Delete user |
+| `sudo passwd john` | Change a user's password |
 
-# 18. Check users and groups (macOS)
-dscl . -list /Users UniqueID | awk '$2>=501'          # custom users
-dscl . -list /Groups PrimaryGroupID | awk '$2>=501'   # custom groups
-dscl . -read /Groups/dev GroupMembership              # group members
-dseditgroup -o read dev
-dseditgroup -o checkmember -m john dev
-id john
-groups john
+### Linux
 
-# 19. Check users and groups (Linux)
-getent passwd
-getent group
-getent group dev
-awk -F: '$3>=1000{print $1}' /etc/passwd              # custom users
-awk -F: '$3>=1000{print $1}' /etc/group               # custom groups
-id john
-groups john
+| Command | Purpose |
+|---|---|
+| `sudo groupadd dev` | Create group |
+| `sudo groupdel dev` | Delete group |
+| `sudo useradd -m -s /bin/bash john` | Create user with a home directory |
+| `sudo passwd john` | Set password |
+| `sudo usermod -aG dev john` | Add user to group (append) |
+| `sudo gpasswd -d john dev` | Remove user from group |
+| `sudo usermod -g dev john` | Set primary group |
+| `sudo userdel -r john` | Delete user and home directory |
 
-# 20. Verify ownership after setup
-sudo chown john:dev project/
-chmod 770 project/
-ls -ld project/
+## 16. Check users and groups
 
+### macOS
 
-## 21. Quick revision — commands to memorize
+| Command | Purpose |
+|---|---|
+| `dscl . -list /Users UniqueID \| awk '$2>=501'` | Custom users only (UID >= 501) |
+| `dscl . -list /Groups PrimaryGroupID \| awk '$2>=501'` | Custom groups only (GID >= 501) |
+| `dscl . -read /Groups/dev GroupMembership` | Members of a group |
+| `dseditgroup -o read dev` | Full group details |
+| `dseditgroup -o checkmember -m john dev` | Is `john` in `dev`? |
+| `id john` | A user's UID, GID and groups |
+| `groups john` | A user's groups |
+| `dscl . -read /Users/john` | Full user record |
+
+### Linux
+
+| Command | Purpose |
+|---|---|
+| `getent passwd` | All users |
+| `getent group` | All groups |
+| `getent group dev` | One group and its members |
+| `awk -F: '$3>=1000{print $1}' /etc/passwd` | Custom users only (UID >= 1000) |
+| `awk -F: '$3>=1000{print $1}' /etc/group` | Custom groups only (GID >= 1000) |
+| `id john` / `groups john` | A user's IDs and groups |
+| `lastlog` | Last login of each user |
+
+## 17. Quick revision — commands to memorize
 
 ```bash
 # View permissions
@@ -415,4 +423,46 @@ whoami
 id
 groups
 sudo -l
+
+# Create / delete groups
+sudo dseditgroup -o create dev            # macOS
+sudo dseditgroup -o delete dev
+sudo groupadd dev                         # Linux
+sudo groupdel dev
+
+# Create / delete users
+sudo sysadminctl -addUser john -fullName "John" -password -   # macOS
+sudo sysadminctl -deleteUser john
+sudo useradd -m -s /bin/bash john         # Linux
+sudo passwd john
+sudo userdel -r john
+
+# Add / remove user in group
+sudo dseditgroup -o edit -a john -t user dev   # macOS add
+sudo dseditgroup -o edit -d john -t user dev   # macOS remove
+sudo usermod -aG dev john                      # Linux add
+sudo gpasswd -d john dev                       # Linux remove
+
+# Check users and groups (macOS)
+dscl . -list /Users UniqueID | awk '$2>=501'          # custom users
+dscl . -list /Groups PrimaryGroupID | awk '$2>=501'   # custom groups
+dscl . -read /Groups/dev GroupMembership              # group members
+dseditgroup -o read dev
+dseditgroup -o checkmember -m john dev
+id john
+groups john
+
+# Check users and groups (Linux)
+getent passwd
+getent group
+getent group dev
+awk -F: '$3>=1000{print $1}' /etc/passwd              # custom users
+awk -F: '$3>=1000{print $1}' /etc/group               # custom groups
+id john
+groups john
+
+# Verify ownership after setup
+sudo chown john:dev project/
+chmod 770 project/
+ls -ld project/
 ```
