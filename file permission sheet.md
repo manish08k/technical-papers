@@ -321,7 +321,50 @@ umask
 
 **Caution:** Do not blindly use `chmod -R 777`. It makes files and directories broadly writable and executable. Also, the separate `find` commands above are a general example; some projects need executable files, private files or special directory permissions preserved.
 
-## 15. Quick revision — commands to memorize
+# 15. Create / delete groups
+sudo dseditgroup -o create dev            # macOS
+sudo dseditgroup -o delete dev
+sudo groupadd dev                         # Linux
+sudo groupdel dev
+
+# 16. Create / delete users
+sudo sysadminctl -addUser john -fullName "John" -password -   # macOS
+sudo sysadminctl -deleteUser john
+sudo useradd -m -s /bin/bash john         # Linux
+sudo passwd john
+sudo userdel -r john
+
+# 17. Add / remove user in group
+sudo dseditgroup -o edit -a john -t user dev   # macOS add
+sudo dseditgroup -o edit -d john -t user dev   # macOS remove
+sudo usermod -aG dev john                      # Linux add
+sudo gpasswd -d john dev                       # Linux remove
+
+# 18. Check users and groups (macOS)
+dscl . -list /Users UniqueID | awk '$2>=501'          # custom users
+dscl . -list /Groups PrimaryGroupID | awk '$2>=501'   # custom groups
+dscl . -read /Groups/dev GroupMembership              # group members
+dseditgroup -o read dev
+dseditgroup -o checkmember -m john dev
+id john
+groups john
+
+# 19. Check users and groups (Linux)
+getent passwd
+getent group
+getent group dev
+awk -F: '$3>=1000{print $1}' /etc/passwd              # custom users
+awk -F: '$3>=1000{print $1}' /etc/group               # custom groups
+id john
+groups john
+
+# 20. Verify ownership after setup
+sudo chown john:dev project/
+chmod 770 project/
+ls -ld project/
+
+
+## 21. Quick revision — commands to memorize
 
 ```bash
 # View permissions
