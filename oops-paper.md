@@ -1,30 +1,39 @@
 # Python OOP – Countdown and Triangle
 
 ## 1. Countdown (Counter Class)
-'''
+
+```python
 class Counter:
     def __init__(self):
         self.value = 0
 
-    def inc(self):
+    def incr(self): 
         self.value += 1
 
-    def dec(self):
+    def decr(self):
         self.value -= 1
 
-    def incrn(self, n):
+    def incrby(self, n):
         self.value += n
 
-    def decn(self, n):
+    def decrby(self, n):
         self.value -= n
 
 
 c = Counter()
-c.inc()
-print(c.value)
-c.incrn(5)
-print(c.value)
-'''
+
+c.incr()
+print(c.value)  # 1
+
+c.decr()
+print(c.value)  # 0
+
+c.incrby(5)
+print(c.value)  # 5
+
+c.decrby(2)
+print(c.value)  # 3
+```
 
 ## 2. Triangle and Point
 
