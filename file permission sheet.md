@@ -466,3 +466,13 @@ sudo chown john:dev project/
 chmod 770 project/
 ls -ld project/
 ```
+
+
+
+
+
+
+
+
+
+[File_Permissions_Study_Guide.pdf](https://github.com/user-attachments/files/34509232/File_Permissions_Study_Guide.pdf)
