@@ -279,6 +279,4 @@ syntax on
 
 `i`, `Esc`, `:wq`, `:q!`, `dd`, `yy`, `p`, `u`, `/word`, `ciw`
 
-## 🎮 Practice Vim
 
-[Play the Interactive Vim Game](https://manish08k.github.io/vim-game/)
