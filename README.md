@@ -1,84 +1,77 @@
-# Maharashtra Company Registration Analytics
+# Technical Papers
 
-Analyses Maharashtra company master data with Python and Matplotlib.
+> Technical paper summaries, cheatsheets, and AMA notes, written as part of my **MountBlue** learning journey.
 
-## Charts (saved in `plots/`)
-1. `chart1_authorised_capital_histogram.png` - companies per authorised
-   capital interval: `<= 1L`, `1L to 10L`, `10L to 1Cr`, `1Cr to 10Cr`,
-   `> 10Cr` (1L = 100,000; 1Cr = 10,000,000). Log y-axis is used
-   automatically if the counts differ by more than 100x.
-2. `chart2_registrations_by_year.png` - registrations per year.
-3. `chart3_registrations_by_district_2015.png` - top 15 districts by
-   registrations in 2015 (via PIN code).
-4. `chart4_top_activities_last_10_years.png` - grouped bars: top five
-   principal business activities across the latest 10 registration years.
+![Topics](https://img.shields.io/badge/Python-OOP%20%7C%20SOLID-3776AB?logo=python&logoColor=white)
+![Topics](https://img.shields.io/badge/Git-Version%20Control-F05032?logo=git&logoColor=white)
+![Topics](https://img.shields.io/badge/PostgreSQL-psql-4169E1?logo=postgresql&logoColor=white)
+![Topics](https://img.shields.io/badge/Vim-Editor-019733?logo=vim&logoColor=white)
+![Format](https://img.shields.io/badge/Format-Markdown-lightgrey?logo=markdown)
 
-## Data sources
-- Company data: https://data.gov.in/catalog/company-master-data
-  (Maharashtra file, saved as `data/company_master_maharashtra.csv`).
-- PIN-code mapping: https://www.goldenchennai.com/pin-code/maharashtra-postal-code/
-  Run `python build_pincode_mapping.py` to build `data/pincode_district.csv`
-  from the page (or save the page as HTML and use `--html-file page.html`).
-  The script only copies rows that have a 6-digit PIN and a district. The
-  mapping is NOT verified to be complete; the program reports how many PIN
-  codes could not be matched.
+## About
 
-## Requirements
-Python 3.10+.
+This repository is a single place for everything I write while learning. It contains short, practical notes meant for quick revision, covering Python, the command line, Git, Vim, PostgreSQL, and software design concepts.
 
-## Structure
+## Repository Structure
+
 ```text
-analysis.py              data loading, cleaning, aggregation
-visualization.py         Matplotlib charts
-main.py                  runs everything
-build_pincode_mapping.py builds data/pincode_district.csv
-test_analysis.py         unittest tests
-data/  plots/
+technical-papers/
+├── AMA/                # Daily "Ask Me Anything" Q&A notes
+├── Cheatsheets/        # Quick-reference sheets for tools and languages
+├── Technical-Papers/   # In-depth write-ups on specific topics
+└── README.md
 ```
 
-## Setup
-```bash
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements-dev.txt
-```
-`requirements.txt` holds runtime dependencies (matplotlib);
-`requirements-dev.txt` adds flake8. After installing, verify with
-`pip freeze`.
+## Contents
 
-## Run
-```bash
-python build_pincode_mapping.py   # once, needs internet
-python main.py                    # optional: --year 2015 --company-csv PATH
-python -m unittest -v             # tests
-flake8                            # lint (config in .flake8)
-```
+### Technical Papers
 
-## Data-cleaning decisions
-- Column names are matched case-insensitively against aliases in
-  `analysis.py` (`COLUMN_ALIASES`); edit them if the real headers differ.
-- Capital: commas removed; blank, non-numeric, NaN/inf and negative values
-  are excluded from chart 1 and counted. Zero is valid (`<= 1L`).
-  Intervals are upper-inclusive, so each value falls in exactly one.
-- Dates: several formats are tried (day-first). Unparseable dates, years
-  before 1850 and future dates are excluded from charts 2-4 and counted.
-  Check the real format; two-digit years are ambiguous.
-- PIN code: the 6-digit number at the very end of the address. Missing or
-  unmatched PINs are counted, never given a made-up district.
-- Missing business activity is excluded from chart 4 and counted.
-- No row is deleted; all exclusions are printed by `main.py`.
+In-depth write-ups that explain a topic end to end.
 
-## Known limitations
-- Registered address PIN may not reflect the actual operating location.
-- Company master data is a snapshot; struck-off companies may be absent.
-- District names depend on the web page and may be outdated.
+| Paper | Topic |
+| --- | --- |
+| [oops-paper.md](Technical-Papers/oops-paper.md) | Object-Oriented Programming in Python |
+| [solid paper.md](Technical-Papers/solid%20paper.md) | SOLID design principles |
+| [event-sourcing.md](Technical-Papers/event-sourcing.md) | Event sourcing |
+| [psql-sheet.md](Technical-Papers/psql-sheet.md) | PostgreSQL and `psql` |
+| [file permission sheet.md](Technical-Papers/file%20permission%20sheet.md) | Linux file permissions |
+| [vim explanation.md](Technical-Papers/vim%20explanation.md) | Vim explained |
 
-## Git / GitLab
-```bash
-git init
-git add .
-git commit -m "Maharashtra company analytics"
-git branch -M main
-git remote add origin https://gitlab.com/<your-username>/<repo-name>.git
-git push -u origin main
-```
+### Cheatsheets
+
+Compact references for fast lookup. See the [`Cheatsheets`](Cheatsheets/) folder.
+
+| Area | Covers |
+| --- | --- |
+| Python | General, Strings, Arrays, Dictionary, OOP, SOLID Principles, Virtual Environments, pip and PEP 8 |
+| CLI | Essential shell commands |
+| Git | Everyday Git commands and workflows |
+| Vim | Commands and shortcuts |
+
+### AMA Notes
+
+Daily Q&A sessions with questions from the batch and concise answers, one file per day (for example `09-11-2026.md`). See the [`AMA`](AMA/) folder.
+
+## How to Use
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/manish08k/technical-papers.git
+   cd technical-papers
+   ```
+
+2. Browse the folders above, or open any `.md` file directly on GitHub.
+3. Use the cheatsheets for quick revision and the papers when you want the full explanation.
+
+## Writing Style
+
+- **Short and practical:** each topic leads with the answer, then an example.
+- **Code first:** snippets are runnable and kept minimal.
+- **Consistent format:** every note is plain Markdown so it renders anywhere.
+
+## Author
+
+**Manish Nalumachu** ([@manish08k](https://github.com/manish08k))
+
+If you spot a mistake or have a suggestion, feel free to open an issue.
