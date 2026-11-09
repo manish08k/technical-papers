@@ -205,12 +205,12 @@ Once you know a few actions and a few objects, you can combine them in many ways
 | `:w !sudo tee %` | Save a file that needs root permission |
 
 ---
-
 ## 14. Multiple files, splits and tabs
 
 | Command | Action |
 |---|---|
 | `:e file` | Open a file |
+| `:file man.txt` | Rename the current buffer to `man.txt` |
 | `:ls` | List open buffers |
 | `:bn` and `:bp` | Next and previous buffer |
 | `:bd` | Close the current buffer |
@@ -222,7 +222,6 @@ Once you know a few actions and a few objects, you can combine them in many ways
 | `gt` and `gT` | Next and previous tab |
 
 A **buffer** is the file in memory, a **window** is a view of a buffer, and a **tab** is a collection of windows.
-
 ---
 
 ## 15. Marks, macros and registers
