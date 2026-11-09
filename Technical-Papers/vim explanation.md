@@ -207,6 +207,8 @@ Once you know a few actions and a few objects, you can combine them in many ways
 ---
 ## 14. Multiple files, splits and tabs
 
+A **buffer** is the file in memory, a **window** is a view of a buffer, and a **tab** is a collection of windows.
+
 | Command | Action |
 |---|---|
 | `:e file` | Open a file |
@@ -221,7 +223,7 @@ Once you know a few actions and a few objects, you can combine them in many ways
 | `:tabnew` | Open a new tab |
 | `gt` and `gT` | Next and previous tab |
 
-A **buffer** is the file in memory, a **window** is a view of a buffer, and a **tab** is a collection of windows.
+
 ---
 
 ## 15. Marks, macros and registers
