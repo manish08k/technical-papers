@@ -274,6 +274,11 @@ syntax on
 
 ---
 
-## 18. The top 10 to remember
+
+## 18. The top 10 Vim commands to remember
 
 `i`, `Esc`, `:wq`, `:q!`, `dd`, `yy`, `p`, `u`, `/word`, `ciw`
+
+## 🎮 Practice Vim
+
+[Play the Interactive Vim Game](https://manish08k.github.io/vim-game/)
