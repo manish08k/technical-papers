@@ -63,7 +63,7 @@ CREATE INDEX idx_dept_salary
 ON employees(department, salary);
 ```
 
-Useful when queries frequently filter using these columns together.
+Useful when queries frequently filter using these columns together. The column order matters.
 
 ### Clustered Index
 
