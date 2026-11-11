@@ -51,5 +51,3 @@ The database continues accepting requests from both servers, even during the net
 | CP | Prioritizes consistency during network failures, even if some requests cannot be served. |
 | AP | Prioritizes availability during network failures, even if some data is temporarily outdated. |
 | CA | Provides consistency and availability when there is no network partition. |
-
-**Remember:** The main idea of CAP theorem is that when a network partition occurs, a distributed database cannot guarantee both consistency and availability at the same time.
