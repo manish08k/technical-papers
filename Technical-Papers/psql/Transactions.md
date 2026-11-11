@@ -1,98 +1,141 @@
 
-# Transactions in DBMS
+# Transaction Management and Concurrency Control in DBMS
 
-A transaction is a group of one or more database operations treated as a single unit. It ensures that operations are completed successfully or rolled back if something goes wrong.
+Transaction management ensures that multiple database operations are executed correctly. Concurrency control prevents problems when multiple transactions access or modify the same data at the same time.
 
-For example, transferring money between two bank accounts involves deducting money from one account and adding it to another. Both operations should succeed together.
+## 1. Concurrency Control
 
-## 1. Transaction Commands
+Concurrency control manages multiple transactions running simultaneously without causing incorrect results.
 
-### BEGIN
+**Example:**
 
-Starts a new transaction.
+Suppose a bank account has ₹5,000.
 
-```sql
-BEGIN;
-```
+- Transaction A wants to withdraw ₹1,000.
+- Transaction B wants to withdraw ₹2,000.
 
-### COMMIT
+Both transactions access the same account. The database must make sure their operations don't overwrite each other or produce an incorrect balance.
 
-Saves all changes made during the transaction permanently.
+## 2. Locks in DBMS
 
-```sql
-COMMIT;
-```
+A lock controls access to data when multiple transactions try to use the same record.
 
-### ROLLBACK
+There are two main types of locks.
 
-Cancels all uncommitted changes made during the transaction.
+### Shared Lock (S Lock)
 
-```sql
-ROLLBACK;
-```
+A shared lock allows multiple transactions to read the same data at the same time, but they cannot modify it while the shared locks are held.
 
-### SAVEPOINT
+**Example:** Two users can view the same bank account balance simultaneously.
 
-Creates a point inside a transaction so we can roll back to that point without cancelling the entire transaction.
+### Exclusive Lock (X Lock)
 
-```sql
-SAVEPOINT sp1;
-```
+An exclusive lock allows only one transaction to modify the data. Other transactions cannot read or modify that data while the exclusive lock is held.
 
-## 2. Transaction Example
+**Example:** If one user is updating an account balance, another user must wait before accessing that record in a conflicting way.
 
-Suppose Account A has ₹5,000 and Account B has ₹2,000. We want to transfer ₹1,000 from A to B.
+## 3. Two-Phase Locking (2PL)
 
-```sql
-BEGIN;
+Two-Phase Locking is a protocol used to control concurrent transactions and ensure conflict serializability.
 
-UPDATE accounts
-SET balance = balance - 1000
-WHERE account_id = 1;
+It has two phases:
 
-UPDATE accounts
-SET balance = balance + 1000
-WHERE account_id = 2;
+### Growing Phase
 
-COMMIT;
-```
+A transaction can acquire locks but cannot release any locks.
 
-After the transaction:
+### Shrinking Phase
 
-- Account A = ₹4,000
-- Account B = ₹3,000
+A transaction can release locks but cannot acquire new locks.
 
-If something goes wrong before committing, we can use `ROLLBACK` to cancel the changes.
+**Example:**
 
-## 3. SAVEPOINT Example
+A transaction needs to update two accounts.
 
-We can use SAVEPOINT when we want to undo only some operations instead of the entire transaction.
+1. Acquire a lock on Account A.
+2. Acquire a lock on Account B.
+3. Perform the updates.
+4. Release the locks.
 
-```sql
-BEGIN;
+Once the transaction releases its first lock, it cannot acquire any new locks under basic 2PL.
 
-UPDATE accounts
-SET balance = balance - 1000
-WHERE account_id = 1;
+## 4. Strict Two-Phase Locking
 
-SAVEPOINT sp1;
+Strict 2PL is a variation of 2PL in which exclusive locks are held until the transaction commits or rolls back.
 
-UPDATE accounts
-SET balance = balance + 1000
-WHERE account_id = 2;
+This prevents other transactions from reading or modifying uncommitted changes.
 
-ROLLBACK TO SAVEPOINT sp1;
+It helps avoid dirty reads and cascading rollbacks.
 
-COMMIT;
-```
+## 5. Deadlock
 
-Here, the second update is undone, but the first update remains. The transaction is then committed.
+A deadlock happens when two or more transactions wait for each other to release locks, and none of them can continue.
 
-## 4. Transaction Properties
+**Example:**
 
-Transactions follow ACID properties:
+- Transaction A locks Account 1 and waits for Account 2.
+- Transaction B locks Account 2 and waits for Account 1.
 
-- **Atomicity:** All operations succeed or none do.
-- **Consistency:** Database rules are maintained.
-- **Isolation:** Concurrent transactions should not interfere incorrectly.
-- **Durability:** Committed changes remain saved.
+Both transactions keep waiting for each other.
+
+The database needs to detect the deadlock and resolve it, usually by aborting one transaction.
+
+## 6. Serializability
+
+Serializability means concurrent transactions should produce the same result as if they had executed one after another in some order.
+
+**Example:**
+
+Suppose two transactions update the same bank account.
+
+Instead of allowing their operations to interfere with each other, the database should ensure that the final result is equivalent to a valid sequential execution.
+
+Two common types are:
+
+- **Conflict Serializability:** A schedule is equivalent to a serial schedule based on the order of conflicting operations.
+- **View Serializability:** A schedule is equivalent to a serial schedule based on which transactions read values and perform the final writes.
+
+## 7. Problems in Concurrent Transactions
+
+### Dirty Read
+
+One transaction reads data that another transaction has modified but not committed.
+
+If the other transaction rolls back, the first transaction has read invalid data.
+
+### Lost Update
+
+Two transactions update the same data, and one update overwrites the other.
+
+### Non-Repeatable Read
+
+A transaction reads the same row twice but gets different values because another transaction updated and committed the row in between.
+
+### Phantom Read
+
+A transaction runs the same query twice but gets different sets of rows because another transaction inserted or deleted matching rows.
+
+## 8. Isolation Levels
+
+Isolation levels control how much one transaction can see the changes made by other transactions.
+
+| Isolation Level | Description |
+|---|---|
+| Read Uncommitted | Allows reading uncommitted changes. |
+| Read Committed | Reads only committed data. |
+| Repeatable Read | Prevents non-repeatable reads. |
+| Serializable | Provides the strongest isolation, making transactions behave as if they execute sequentially. |
+
+## 9. Optimistic and Pessimistic Locking
+
+### Pessimistic Locking
+
+Assumes conflicts may happen, so it locks data before modifying it.
+
+Example: Locking a bank account before updating its balance.
+
+### Optimistic Locking
+
+Assumes conflicts are less likely. Transactions proceed without locking the data initially and check for conflicts before committing.
+
+Example: Checking a version number before updating a user's profile. If another transaction has already changed it, the update is rejected or retried.
